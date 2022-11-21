@@ -1,0 +1,590 @@
+---
+title: "Ex1"
+author: "Yahav"
+date: "2022-10-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+# Exercises
+
+## Computations in R
+
+#### Exercise 1
+
+```{r}
+2 + 3
+```
+
+#### Exercise 2
+
+```{r}
+sqrt(36)
+```
+
+#### Exercise 3
+
+```{r}
+log10(1000)
+```
+
+#### Exercise 4
+
+```{r}
+log2(32)
+```
+
+#### Exercise 5
+
+```{r}
+x = 2 + 3 + 4
+```
+
+#### Exercise 6
+
+```{r}
+abs(5 - 145)
+```
+
+#### Exercise 7
+
+```{r}
+x = sqrt(625) / 5
+print(x)
+```
+
+#### Exercise 8
+
+```{r}
+x = x * 10000
+print(x)
+```
+
+## Data structures in R
+
+#### Exercise 10
+
+```{r}
+vec = c(1, 2, 3, 5, 10)
+```
+
+#### Exercise 11
+
+```{r}
+length(vec)
+```
+
+#### Exercise 12
+
+```{r}
+2:15
+```
+
+#### Exercise 13
+
+```{r}
+rep(x=4, times=5)
+```
+
+#### Exercise 14
+
+```{r}
+c(TRUE, TRUE, FALSE, FALSE)
+```
+
+#### Exercise 15
+
+```{r}
+vec = c(c("P", "A", "X", "6"), c("Z", "I", "C", "2"), c("O", "C", "T", "4"), c("S", "O", "X", "2"))
+print(vec)
+```
+
+#### Exercise 16
+
+```{r}
+vec[5:6]
+```
+
+#### Exercise 17
+
+```{r}
+myvec = 1:5
+myvec[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
+myvec[c(TRUE,FALSE,FALSE,FALSE,TRUE)]
+```
+
+#### Exercise 18
+
+```{r}
+myvec > 3
+myvec == 4
+myvec <= 2
+myvec != 4
+```
+
+#### Exercise 19
+
+```{r}
+myvec[myvec > 2]
+```
+
+#### Exercise 20
+
+```{r}
+matrix(1:15, nrow=5, ncol=3)
+```
+
+#### Exercise 21
+
+```{r}
+mat = matrix(1:15, nrow=5, ncol=3, byrow=TRUE)
+```
+
+#### Exercise 22
+
+```{r}
+mat[1:3, 1:3]
+```
+
+#### Exercise 23
+
+```{r}
+mat[2:3,]
+```
+
+#### Exercise 24
+
+```{r}
+class(mat[,1:2])
+```
+
+#### Exercise 25
+
+```{r}
+class(mat[,1])
+```
+
+#### Exercise 26
+
+```{r}
+df = data.frame(col1=1:5, col2=c("a", "b", "c", "d", "e"), col3=10:14)
+```
+
+#### Exercise 27
+
+```{r}
+df[1:2, 1:2]
+```
+
+#### Exercise 28
+
+```{r}
+df[2:3,]
+```
+
+#### Exercise 29
+
+```{r}
+df[,c("col2", "col3")]
+```
+
+#### Exercise 30
+
+```{r}
+df$col2
+```
+
+#### Exercise 31
+
+```{r}
+df[which(df[, "col1"] > 3),]
+df[df$col1 > 3,]
+```
+
+#### Exercise 32
+
+```{r}
+df[which(df[, "col1"] >= 3),]
+df[df$col1 >= 3,]
+```
+
+#### Exercise 33
+
+```{r}
+as.matrix(df)
+```
+
+#### Exercise 34
+
+```{r}
+mylist = list(a=c("1", "2", "3"), b=5, c=1, d=7)
+```
+
+#### Exercise 35
+
+```{r}
+mylist$a
+```
+
+#### Exercise 36
+
+```{r}
+mylist$d
+```
+
+#### Exercise 37
+
+```{r}
+mylist[1]
+```
+
+#### Exercise 38
+
+```{r}
+mylist[4]
+```
+
+#### Exercise 39
+
+```{r}
+fa = factor(c("a", "b", "c", "d", "e"))
+fa
+```
+
+#### Exercise 40
+
+```{r}
+vec = c("a", "b", "c", "d", "e")
+fa = as.factor(vec)
+print(fa)
+```
+
+#### Exercise 41
+
+```{r}
+as.character(fa)
+```
+
+
+
+## Reading in and writing data out in R
+
+#### Exercise 1
+
+```{r}
+cpgFilePath = system.file("extdata", "CpGi.table.hg18.txt", package="compGenomRData")
+cpgData = read.delim(cpgFilePath)
+```
+
+#### Exercise 2
+
+```{r}
+head(cpgData)
+```
+
+#### Exercise 3
+
+```{r}
+cpgtFilePath=system.file("extdata", "CpGi.table.hg18.txt", package="compGenomRData")
+
+cpgiSepComma=read.table(cpgtFilePath, header=TRUE, sep=",")
+head(cpgiSepComma)
+```
+
+#### Exercise 4
+
+```{r}
+cpgtFilePath=system.file("extdata", "CpGi.table.hg18.txt", package="compGenomRData")
+
+cpgiHF=read.table(cpgtFilePath, header=FALSE, sep="\t", stringsAsFactors=FALSE)
+head(cpgiSepComma)
+```
+
+#### Exercise 5
+
+```{r}
+cpgiSepComma[1:10,]
+```
+
+#### Exercise 6
+
+```{r}
+head(read.table(cpgFilePath, header=FALSE, sep="\t"))
+```
+
+#### Exercise 7
+
+```{r}
+write.table(cpgData, file="C:/Users/Yahav/Desktop/my.cpgi.file.txt")
+```
+
+#### Exercise 8
+
+```{r}
+write.table(cpgData, file="C:/Users/Yahav/Desktop/my.cpgi.file2.txt", quote=FALSE, sep="\t", row.names=FALSE)
+```
+
+#### Exercise 9
+
+```{r}
+write.table(cpgData[1:10,], file="C:/Users/Yahav/Desktop/my.cpgi.file3.txt")
+```
+
+#### Exercise 10
+
+```{r}
+write.table(cpgData[,1:3], file="C:/Users/Yahav/Desktop/my.cpgi.file4.txt")
+```
+
+#### Exercise 11
+
+```{r}
+write.table(cpgData[cpgData$chrom == "chr1",], file="C:/Users/Yahav/Desktop/my.cpgi.file5.txt")
+```
+
+#### Exercise 12
+
+```{r}
+rn4refseqFilePath = system.file("extdata", "rn4.refseq.bed", package="compGenomRData")
+rn4refseq2FilePath = system.file("extdata", "rn4.refseq2name.txt", package="compGenomRData")
+
+df1 = read.table(rn4refseqFilePath, header=FALSE, sep="\t")
+df2 = read.table(rn4refseq2FilePath, header=FALSE, sep="\t")
+```
+
+#### Exercise 13
+
+```{r}
+head(df1)
+head(df2)
+```
+
+#### Exercise 14
+
+```{r}
+new.df = merge(df1, df2)
+head(new.df)
+```
+
+
+
+## Plotting in R
+
+```{r}
+set.seed(1001)
+x1 = 1:100 + rnorm(100, mean=0, sd=15)
+y1 = 1:100
+```
+
+#### Exercise 1
+
+```{r}
+plot(x1, y1)
+```
+
+#### Exercise 2
+
+```{r}
+plot(x1, y1, main="Scatter Plot")
+```
+
+#### Exercise 3
+
+```{r}
+plot(x1, y1, xlab="X Axis Title", ylab="Y Axis Title")
+```
+
+#### Exercise 4
+
+```{r}
+plot(x1, y1)
+mtext(side=3,text="hi there")
+```
+
+#### Exercise 5
+
+```{r}
+plot(x1, y1)
+mtext(side=2,text="hi there")
+```
+
+#### Exercise 6
+
+```{r}
+plot(x1, y1)
+mtext(side=3,text=paste("hi", "there"))
+```
+
+#### Exercise 7
+
+```{r}
+cor(x1, y1)
+```
+
+#### Exercise 8
+
+```{r}
+plot(x1, y1)
+mtext(side=3,text=paste("The Correlation Coefficient is:", cor(x1, y1)))
+```
+
+#### Exercise 9
+
+```{r}
+plot(x1, y1, col="red")
+```
+
+#### Exercise 10
+
+```{r}
+plot(x1, y1, pch=19)
+```
+
+#### Exercise 11
+
+```{r}
+plot(x1, y1, pch=18)
+```
+
+#### Exercise 12
+
+```{r}
+hist(x1)
+```
+
+#### Exercise 13
+
+```{r}
+hist(x1, col="red", xlab="X Axis Title", ylab="Y Axis Title", main="Histogram Title")
+```
+
+#### Exercise 14
+
+```{r}
+boxplot(y1)
+```
+
+#### Exercise 15
+
+```{r}
+boxplot(x1, y1)
+```
+
+#### Exercise 16
+
+```{r}
+boxplot(x1, y1, horizontal=TRUE)
+```
+
+#### Exercise 17
+
+```{r}
+par(mfrow=c(2, 1))
+boxplot(x1, y1)
+hist(x1)
+```
+
+#### Exercise 18
+
+```{r}
+par(mfrow=c(1, 2))
+boxplot(x1, y1)
+hist(x1)
+```
+
+#### Exercise 20
+
+```{r}
+x2=1:1000+rnorm(1000,mean=0,sd=200)
+y2=1:1000
+smoothScatter(x2, y2, colramp=colorRampPalette(c("white","blue", "green","yellow","red")))
+```
+
+
+
+## Functions and control structures (for, if/else, etc.)
+
+```{r}
+cpgtFilePath=system.file("extdata", "CpGi.table.hg18.txt", package="compGenomRData")
+cpgi=read.table(cpgtFilePath, header=TRUE, sep="\t")
+head(cpgi)
+```
+
+#### Exercise 1
+
+```{r}
+hist(cpgi$perGc)
+```
+
+#### Exercise 2
+
+```{r}
+boxplot(cpgi$perGc)
+```
+
+#### Exercise 3
+
+```{r}
+GCper=65
+
+# check if GC value is lower than 60,
+# assign "low" to result
+if (GCper < 60) {
+  result="low"
+  cat("low")
+} else if (GCper > 75) { # check if GC value is higher than 75, assign "high" to result
+  result="high"
+  cat("high")
+} else { # if those two conditions fail then it must be "medium"
+  result="medium"
+}
+
+print(result)
+```
+
+#### Exercise 4
+
+```{r}
+GCclass <- function (my.gc) {
+  # check if GC value is lower than 60,
+  # assign "low" to result
+  if (my.gc < 60) {
+    result="low"
+    cat("low")
+  } else if (my.gc > 75) { # check if GC value is higher than 75, assign "high" to result
+    result="high"
+    cat("high")
+  } else { # if those two conditions fail then it must be "medium"
+    result="medium"
+  }
+  return(result)
+}
+
+GCclass(10) # should return "low"
+GCclass(90) # should return "high"
+GCclass(65) # should return "medium"
+```
+
+#### Exercise 5
+
+```{r}
+gcValues = c(10,50,70,65,90)
+for(i in gcValues) {
+  print(GCclass(i))
+}
+```
+
+#### Exercise 6
+
+```{r}
+lapply(gcValues,GCclass)
+```
+
+#### Exercise 7
+
+```{r}
+sapply(gcValues,GCclass)
+```
