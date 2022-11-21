@@ -1,0 +1,71 @@
+---
+title: "Exercise  4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+### Exploring the count tables
+
+Here, import an example count table and do some exploration of the expression data. 
+
+```{r exSetup1}
+counts_file <- system.file("extdata/rna-seq/SRP029880.raw_counts.tsv",
+                           package = "compGenomRData")
+coldata_file <- system.file("extdata/rna-seq/SRP029880.colData.tsv", 
+                            package = "compGenomRData")
+```
+
+1. Normalize the counts using the TPM approach.
+
+```{r}
+counts = as.matrix(read.table(counts_file, header=T, sep='\t'))
+gene_lengths = as.vector(subset(counts, select = c(width)))
+rpk = apply(subset(counts, select = c(-width)), 2, function(x) x/(gene_lengths/1000))
+tpm = apply(rpk, 2, function(x) x / sum(as.numeric(x)) * 10^6)
+```
+
+2. Plot a heatmap of the top 500 most variable genes. Compare with the heatmap obtained using the 100 most variable genes. Hint : use var() function to compute the variance. 
+
+```{r}
+if (!require("matrixStats")) {
+  install.packages("matrixStats")
+}
+library(matrixStats)
+var_genes = sort(apply(tpm, 1, var), decreasing=TRUE)
+top_500_variables_genes = names(var_genes)[1:500]
+top_100_variables_genes = names(var_genes)[1:100]
+
+heatmap(tpm[top_500_variables_genes,], main="Top 500 most variable genes across samples")
+heatmap(tpm[top_100_variables_genes,], main="Top 100 most variable genes across samples")
+```
+
+3. Re-do the heatmaps setting the `scale` argument to `none`, and `column`. Compare the results with `scale = 'row'`.
+
+```{r}
+heatmap(tpm[top_500_variables_genes,], main="Top 500 most variable genes across samples", scale='none')
+heatmap(tpm[top_100_variables_genes,], main="Top 100 most variable genes across samples", scale='column')
+```
+
+4. Draw a correlation plot for the samples depicting the sample differences as 'ellipses', drawing only the upper end of the matrix, and order samples by hierarchical clustering results based on `average` linkage clustering method. 
+
+```{r}
+if (!require("corrplot")) {
+  install.packages("corrplot")
+}
+library(corrplot)
+
+res = cor(tpm)
+corrplot(res, type="upper", method='ellipse',  order='hclust', hclust.method='average')
+```
+
+
+### Git and Github
+
+5. Open Github account, and install git if it required as instructed in the following link: https://github.com/llendway/github_for_collaboration/blob/master/github_for_collaboration.md
+
+6. Create a repository and commit and push the answers of this exercise through Rtudio (Please upload the answers to the exercises also to Moodle).
+
+7. Insert the link to your Github account here.
