@@ -1,0 +1,105 @@
+---
+title: "Exercise 3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+For these exercises, we will be using the following dataset:
+
+```{r}
+if (!require("downloader")) {
+  install.packages("downloader")
+}
+library(downloader)
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/mice_pheno.csv"
+filename <- basename(url)
+download(url, destfile=filename)
+dat <- read.csv(filename)
+```
+
+We will remove the lines that contain missing values:
+
+```{r}
+dat <- na.omit(dat)
+```
+
+## *Question 1*
+
+Use `dplyr` to create a vector x with the body weight of all males on the control (chow) diet. What is this population’s average?
+
+**Answer 1**
+
+```{r}
+if (!require("dplyr")) {
+  install.packages("dplyr")
+}
+library(dplyr)
+male_control = filter(dat, Diet=="chow", Sex=="M") %>% select(Bodyweight) %>% unlist
+mean(male_control)
+```
+
+## *Question 2*
+
+Now use the rafalib package and use the popsd function to compute the population standard deviation.
+
+**Answer 2**
+
+```{r}
+if (!require("rafalib")) {
+  install.packages("rafalib")
+}
+library(rafalib)
+popsd(male_control)
+```
+
+## *Question 3*
+
+**Answer 3**
+
+```{r}
+male_treatment = filter(dat, Diet=="hf", Sex=="M") %>% select(Bodyweight) %>% unlist
+mean(male_treatment)
+```
+
+## *Question 4*
+
+Now use the rafalib package and use the popsd function to compute the population standard deviation.
+
+**Answer 4**
+
+```{r}
+popsd(male_treatment)
+```
+
+## *Question 5*
+
+Calculate the means and variances of the rows of the following simulated data set, and plot the distributions of means and variances using `hist()` and `boxplot()` functions.
+```{r}
+set.seed(100)
+
+#sample data matrix from normal distribution
+gset=rnorm(600,mean=200,sd=70)
+data=matrix(gset,ncol=6)
+```
+
+**Answer 5**
+
+```{r}
+if (!require("matrixStats")) {
+  install.packages("matrixStats")
+}
+library(matrixStats)
+row_means = rowMeans(data)
+row_vars = rowVars(data)
+
+par(mfrow=c(1, 2))
+hist(row_means, main="Distribution of Means")
+boxplot(row_means)
+
+par(mfrow=c(1, 2))
+hist(row_vars, main="Distribution of Variances")
+boxplot(row_vars)
+```
